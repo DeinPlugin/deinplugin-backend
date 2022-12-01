@@ -1,9 +1,34 @@
 {% extends 'base.html' %}
 {% block title %}HOME{% endblock %}
 {% block content %}
+<script type="text/javascript"> 
+    function doit(){
+        fetch('https://api.github.com/users/{{user.username}}')
+        .then(response => response.json())
+        .then(data => console.log(data));
+    }
+
+    function test(){
+        // follow a user
+        console.log("{{token}}");
+        console.log('Bearer {{token}}')
+        fetch('https://api.github.com/user/following', {
+            method: 'GET',
+            headers:{
+                'Accept': 'application/vnd.github+json',
+                'Authorization': 'Bearer {{token}}'
+            }
+        }
+        
+        ).then(response => response.json()).then(data => console.log(data));
+    }
+ </script>
     <div class="row">
         <div class="col-sm-12 mb-3">
             <h4 class="text-center">Welcome {{user.username}}</h4>
+            <button onclick="test()">
+                Fetch
+            </button>
         </div>
     </div>
 {% endblock %}

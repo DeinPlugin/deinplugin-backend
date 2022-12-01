@@ -11,9 +11,12 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+with open("config.json", 'r') as f:
+    credentials = json.load(f)
 
 
 # Quick-start development settings - unsuitable for production
@@ -136,5 +139,6 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = 'login'
 
-SOCIAL_AUTH_GITHUB_KEY = 'Iv1.67d2e79ec5e00c54'
-SOCIAL_AUTH_GITHUB_SECRET = '841dcda81faa92295c39b0e6c73f536fca7aba42'
+SOCIAL_AUTH_GITHUB_KEY = credentials['client_id']
+SOCIAL_AUTH_GITHUB_SECRET = credentials['client_secret']
+SOCIAL_AUTH_GITHUB_SCOPE = ['user:email', 'user:follow']
