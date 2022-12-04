@@ -23,8 +23,8 @@ jobs:
             echo "Updating repository ..."
             git pull origin main
             echo "Stopping old containers ..."
-            docker-compose down
+            docker compose down
             echo "Building and starting new containers ..."
-            docker-compose up --build -d --remove-orphans
+            docker compose up --build -d --remove-orphans
             echo "Deleting old images ..."
             docker image prune -a -f
