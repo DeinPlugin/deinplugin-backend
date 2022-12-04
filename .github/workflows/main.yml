@@ -19,11 +19,6 @@ jobs:
           key: ${{ secrets.TEST_SSH_SECRET }}
           port: 22
           script: |
-#            if [ -z "$SSH_AUTH_SOCK" ] ; then
-#              echo "Starting ssh-agent ..."
-#              eval `ssh-agent -s`
-#              ssh-add ~/.ssh/id_ed25519_github_backend_deploykey
-#            fi
             cd ${{ secrets.TEST_SSH_DEPLOY_PATH }}
             echo "Updating repository ..."
             git pull origin master
