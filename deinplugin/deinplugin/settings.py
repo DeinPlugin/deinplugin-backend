@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'social_django.middleware.SocialAuthExceptionMiddleware',       
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'deinplugin.urls'
@@ -123,6 +123,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'collected-static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -142,3 +143,14 @@ LOGOUT_REDIRECT_URL = 'login'
 SOCIAL_AUTH_GITHUB_KEY = credentials['client_id']
 SOCIAL_AUTH_GITHUB_SECRET = credentials['client_secret']
 SOCIAL_AUTH_GITHUB_SCOPE = ['user:email', 'user:follow']
+
+# ### Template for prodsettings.py ###
+#
+# from deinplugin.settings import *
+#
+# SECRET_KEY = 'placeholder'
+#
+# ALLOWED_HOSTS = ['placeholder.com']
+#
+# DEBUG = False
+#

@@ -1,0 +1,38 @@
+version: "3.9"
+services:
+  webserver:
+    build: .
+    command: sh -c "/wait && /docker-entrypoint.sh"
+    environment:
+      DJANGO_SETTINGS_MODULE: "deinplugin.settings"
+#      DJANGO_DB_NAME: "django_db"
+#      DJANGO_DB_USER: "djangouser"
+#      DJANGO_DB_PASSWORD: "djangopass"
+#      DJANGO_DB_HOST: "django-db"
+#      DJANGO_DB_PORT: "5091"
+#      WAIT_HOSTS: "django-db:5091"
+#      WAIT_SLEEP_INTERVAL: "3"
+#      WAIT_TIMEOUT: "60"
+    volumes:
+      - ./deinplugin:/var/www/deinplugin
+      - ./logs/apache:/var/www/logs
+      - ./apache-config.conf:/etc/apache2/sites-available/000-default.conf
+      - ./docker-entrypoint.sh:/docker-entrypoint.sh
+      - ./certs:/certs
+#    depends_on:
+#      - django-db
+    ports:
+      - "5097:80"
+
+#  django-db:
+#    image: postgres:latest
+#    command: -p 5091
+#    environment:
+#      PGDATA: /var/lib/postgresql/data/pgdata
+#      POSTGRES_DB: "django_db"
+#      POSTGRES_PASSWORD: "djangopass"
+#      POSTGRES_USER: "djangouser"
+#    volumes:
+#      - ./data/django-db:/var/lib/postgresql/data/pgdata
+#    ports:
+#      - "5091:5091"
