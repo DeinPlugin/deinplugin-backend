@@ -10,22 +10,14 @@
 
     function test(){
         // follow a user
-        console.log("{{token}}");
-        console.log('Bearer {{token}}')
-        fetch('https://api.github.com/user/following', {
-            method: 'GET',
-            headers:{
-                'Accept': 'application/vnd.github+json',
-                'Authorization': 'Bearer {{token}}'
-            }
-        }
+        console.log("{{res}}");
         
-        ).then(response => response.json()).then(data => console.log(data));
     }
  </script>
     <div class="row">
         <div class="col-sm-12 mb-3">
             <h4 class="text-center">Welcome {{user.username}}</h4>
+            {{ data }}
             <button onclick="test()">
                 Fetch
             </button>
