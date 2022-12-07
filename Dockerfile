@@ -14,7 +14,7 @@ RUN a2enmod wsgi
 COPY ./requirements.txt ./requirements.txt
 
 RUN pip install -r requirements.txt
-# RUN pip install psycopg2
+RUN pip install psycopg2
 
 COPY ./deinplugin /var/www/deinplugin
 COPY ./apache-config.conf /etc/apache2/sites-available/000-default.conf
