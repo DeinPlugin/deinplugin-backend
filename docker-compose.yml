@@ -16,7 +16,6 @@ services:
     volumes:
       - ./logs/apache:/var/www/logs
       - ./apache-config.conf:/etc/apache2/sites-available/000-default.conf:ro
-      - ./docker-entrypoint.sh:/docker-entrypoint.sh:ro
       - ./certs:/certs:ro
     depends_on:
       - django-db

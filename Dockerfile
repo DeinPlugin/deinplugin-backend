@@ -18,7 +18,9 @@ RUN pip install psycopg2
 
 COPY ./deinplugin /var/www/deinplugin
 COPY ./apache-config.conf /etc/apache2/sites-available/000-default.conf
+
 COPY ./docker-entrypoint.sh ./docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait /wait
 RUN chmod +x /wait
