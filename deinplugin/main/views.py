@@ -37,21 +37,20 @@ class PluginViewSet(viewsets.ModelViewSet):
         deinplugin_yaml = yaml.load(content, Loader=yaml.FullLoader)
         try:
             plugin = Plugin.objects.create(
-                specVersion=deinplugin_yaml['specVersion'], 
-                type=deinplugin_yaml['type'], 
-                supportedPlatforms=deinplugin_yaml['supportedPlatforms'], 
-                supportedGameVersions=deinplugin_yaml['supportedGameVersions'], 
-                category=deinplugin_yaml['category'], 
-                authors=deinplugin_yaml['authors'], 
-                tags=deinplugin_yaml['tags'], 
-                images=deinplugin_yaml['images'], 
-                icon=deinplugin_yaml['icon'], 
-                videoSources=deinplugin_yaml['videoSources'], 
+                specVersion=deinplugin_yaml.get('specVersion'), 
+                type=deinplugin_yaml.get('type'), 
+                supportedPlatforms=deinplugin_yaml.get('supportedPlatforms'), 
+                supportedGameVersions=deinplugin_yaml.get('supportedGameVersions'), 
+                category=deinplugin_yaml.get('category'), 
+                authors=deinplugin_yaml.get('authors'), 
+                tags=deinplugin_yaml.get('tags'), 
+                images=deinplugin_yaml.get('images'), 
+                icon=deinplugin_yaml.get('icon'), 
+                videoSources=deinplugin_yaml.get('videoSources'), 
                 github_url=github_url)
             plugin.save()
-        except KeyError  as e:
-            print(e)
-            return Response({'error': 'deinplugin.yaml is not valid'}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({'message': 'deinplugin.yaml is not valid', 'error' : str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
         names = deinplugin_yaml['name']
         if isinstance(names, dict):

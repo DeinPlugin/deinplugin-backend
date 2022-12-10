@@ -35,7 +35,7 @@ class Plugin(models.Model):
     authors = ArrayField(models.CharField(max_length=100))
     tags = ArrayField(models.CharField(max_length=100), null=True, blank=True)
     images = ArrayField(models.CharField(max_length=100), null=True, blank=True)
-    icon = models.CharField(max_length=100)
+    icon = models.CharField(max_length=100, null=True, blank=True)
     videoSources = ArrayField(models.CharField(max_length=100), null=True, blank=True)
 
     github_url = models.CharField(max_length=100)
