@@ -23,6 +23,6 @@ urlpatterns = [
    # path('login/', views.login, name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('social-auth/', include('social_django.urls', namespace='social')),
-    path('api/', include('main.urls')),
+    path('main/', include('main.urls')),
     path("api-auth/", include("rest_framework.urls")),
 ]
