@@ -18,7 +18,6 @@ class PluginSerializer(serializers.ModelSerializer):
             'images',
             'icon',
             'videoSources',
-            'version',
             'github_url',
         )
 
