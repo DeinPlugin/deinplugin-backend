@@ -2,6 +2,8 @@
 from rest_framework.response import Response
 from rest_framework import status, viewsets
 from django.contrib.auth.models import User
+# import action decorator from 
+from rest_framework.decorators import action
 
 from .utils import get_plugin_info
 from .models import Plugin, Dependency, Introduction, Description, PluginName
@@ -84,4 +86,8 @@ class PluginViewSet(viewsets.ModelViewSet):
             desc.save()
         return Response({'success': 'Plugin created'}, status=status.HTTP_201_CREATED)
 
+    @action(detail=False, methods=['post'], url_path='wipe')
+    def wipe(self, request, pk=None):
+        Plugin.objects.all().delete()
+        return Response({'success': 'Plugins wiped'}, status=status.HTTP_200_OK)
 
