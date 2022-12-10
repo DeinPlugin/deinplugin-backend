@@ -1,25 +1,14 @@
 from rest_framework import serializers
-from .models import Plugin, Dependency, Introduction, Description
+from .models import Plugin, PluginName, Dependency, Introduction, Description, Installation
 
-
-class PluginSerializer(serializers.ModelSerializer):
+class PluginNameSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Plugin
+        model = PluginName
         fields = (
-            'uuid',
-            'name',
-            'specVersion',
-            'type',
-            'supportedPlatforms',
-            'supportedGameVersions',
-            'category',
-            'authors',
-            'tags',
-            'images',
-            'icon',
-            'videoSources',
-            'github_url',
+            'key',
+            'value',
         )
+
 
 class DependencySerializer(serializers.ModelSerializer):
     class Meta:
@@ -45,4 +34,42 @@ class DescriptionSerializer(serializers.ModelSerializer):
         fields = (
             'key',
             'value',
+        )
+
+class InstallationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Installation
+        fields = (
+            'key',
+            'value',
+        )
+
+
+class PluginSerializer(serializers.ModelSerializer):
+    names = PluginNameSerializer(many=True)
+    dependencies = DependencySerializer(many=True)
+    introductions = IntroductionSerializer(many=True)
+    descriptions = DescriptionSerializer(many=True)
+    installations = InstallationSerializer(many=True)
+    class Meta:
+        model = Plugin
+       
+        fields = (
+            'uuid',
+            'names',
+            'descriptions',
+            'specVersion',
+            'introductions',
+            'type',
+            'supportedPlatforms',
+            'dependencies',
+            'supportedGameVersions',
+            'installations',
+            'category',
+            'authors',
+            'tags',
+            'images',
+            'icon',
+            'videoSources',
+            'github_url',
         )

@@ -5,9 +5,7 @@ import uuid
 # Create your models here.
 class Plugin(models.Model):
     uuid = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    name = models.CharField(max_length=100)
     specVersion = models.IntegerField(default=1)
-
 
     class PluginType(models.TextChoices):
         plugin = 'plugin', 'Plugin'
@@ -41,26 +39,29 @@ class Plugin(models.Model):
     videoSources = ArrayField(models.CharField(max_length=100), null=True, blank=True)
 
     github_url = models.CharField(max_length=100)
-    def __str__(self):
-        return self.name
+
+class PluginName(models.Model):
+    plugin = models.ForeignKey(Plugin, on_delete=models.CASCADE, related_name='names')
+    key = models.CharField(max_length=5)
+    value = models.CharField(max_length=100)
 
 class Dependency(models.Model):
-    plugin = models.ForeignKey(Plugin, on_delete=models.CASCADE)
+    plugin = models.ForeignKey(Plugin, on_delete=models.CASCADE, related_name='dependencies')
     url = models.CharField(max_length=100)
     versionRange = models.CharField(max_length=100)
     required = models.BooleanField(default=True)
 
 class Introduction(models.Model):
-    plugin = models.ForeignKey(Plugin, on_delete=models.CASCADE)
+    plugin = models.ForeignKey(Plugin, on_delete=models.CASCADE, related_name='introductions')
     key = models.CharField(max_length=5)
     value = models.TextField()
 
 class Description(models.Model):
-    plugin = models.ForeignKey(Plugin, on_delete=models.CASCADE)
+    plugin = models.ForeignKey(Plugin, on_delete=models.CASCADE, related_name='descriptions')
     key = models.CharField(max_length=5)
     value = models.TextField()
 
 class Installation(models.Model):
-    plugin = models.ForeignKey(Plugin, on_delete=models.CASCADE)
+    plugin = models.ForeignKey(Plugin, on_delete=models.CASCADE, related_name='installations')
     key = models.CharField(max_length=5)
     value = models.TextField()

@@ -4,7 +4,7 @@ from rest_framework import status, viewsets
 from django.contrib.auth.models import User
 
 from .utils import get_plugin_info
-from .models import Plugin, Dependency, Introduction, Description
+from .models import Plugin, Dependency, Introduction, Description, PluginName
 from .serializers import PluginSerializer
 
 import yaml
@@ -37,7 +37,6 @@ class PluginViewSet(viewsets.ModelViewSet):
         deinplugin_yaml = yaml.load(content, Loader=yaml.FullLoader)
         try:
             plugin = Plugin.objects.create(
-                name=deinplugin_yaml['name'],
                 specVersion=deinplugin_yaml['specVersion'], 
                 type=deinplugin_yaml['type'], 
                 supportedPlatforms=deinplugin_yaml['supportedPlatforms'], 
@@ -53,6 +52,13 @@ class PluginViewSet(viewsets.ModelViewSet):
         except KeyError  as e:
             print(e)
             return Response({'error': 'deinplugin.yaml is not valid'}, status=status.HTTP_400_BAD_REQUEST)
+
+        names = deinplugin_yaml['name']
+        if isinstance(names, dict):
+            for key,value in names.items():
+                name = PluginName.objects.create(plugin=plugin, key=key, value=value)
+                name.save()
+
         if 'dependencies' in deinplugin_yaml:
             dependencies = deinplugin_yaml['dependencies']
             for dependency in dependencies:
