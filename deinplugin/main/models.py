@@ -42,7 +42,7 @@ class Plugin(models.Model):
 
 class PluginName(models.Model):
     plugin = models.ForeignKey(Plugin, on_delete=models.CASCADE, related_name='names')
-    key = models.CharField(max_length=5)
+    key = models.CharField(max_length=5, null=True, blank=True)
     value = models.CharField(max_length=100)
 
 class Dependency(models.Model):
@@ -53,15 +53,15 @@ class Dependency(models.Model):
 
 class Introduction(models.Model):
     plugin = models.ForeignKey(Plugin, on_delete=models.CASCADE, related_name='introductions')
-    key = models.CharField(max_length=5)
+    key = models.CharField(max_length=5, null=True, blank=True)
     value = models.TextField()
 
 class Description(models.Model):
     plugin = models.ForeignKey(Plugin, on_delete=models.CASCADE, related_name='descriptions')
-    key = models.CharField(max_length=5)
+    key = models.CharField(max_length=5, null=True, blank=True)
     value = models.TextField()
 
 class Installation(models.Model):
     plugin = models.ForeignKey(Plugin, on_delete=models.CASCADE, related_name='installations')
-    key = models.CharField(max_length=5)
+    key = models.CharField(max_length=5, null=True, blank=True)
     value = models.TextField()
