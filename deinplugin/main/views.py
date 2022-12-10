@@ -58,6 +58,9 @@ class PluginViewSet(viewsets.ModelViewSet):
             for key,value in names.items():
                 name = PluginName.objects.create(plugin=plugin, key=key, value=value)
                 name.save()
+        else:
+            name = PluginName.objects.create(plugin=plugin, key=None, value=names)
+            name.save()
 
         if 'dependencies' in deinplugin_yaml:
             dependencies = deinplugin_yaml['dependencies']
