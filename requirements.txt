@@ -1,4 +1,5 @@
 Django==4.1.2
+django-cors-headers
 social-auth-app-django
 pyyaml
 djangorestframework
