@@ -74,4 +74,4 @@ class Installation(models.Model):
 class Download(models.Model):
     plugin = models.ForeignKey(Plugin, on_delete=models.CASCADE, related_name='download')
     name = models.CharField(max_length=30, null=True, blank=True)
-    download_url = models.CharField(max_length=100)
+    download_url = models.CharField(max_length=500)

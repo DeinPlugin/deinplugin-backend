@@ -94,7 +94,7 @@ class PluginViewSet(viewsets.ModelViewSet):
             desc.save()
         download = deinplugin_yaml.get('download')
         if download != None:
-            download = Download.objects.create(plugin=plugin, url=download['url'], name=download['fileName'])
+            download = Download.objects.create(plugin=plugin, download_url=download['url'], name=download['name'])
             download.save()
         return Response({'success': 'Plugin created'}, status=status.HTTP_201_CREATED)
 

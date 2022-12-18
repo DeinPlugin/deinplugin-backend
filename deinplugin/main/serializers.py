@@ -48,7 +48,7 @@ class DownloadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Download
         fields = (
-            'url',
+            'download_url',
             'name'
         )
 
