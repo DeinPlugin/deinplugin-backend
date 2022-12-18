@@ -30,6 +30,8 @@ class PluginViewSet(viewsets.ModelViewSet):
     queryset = Plugin.objects.all()
     serializer_class = PluginSerializer
 
+    def get_queryset(self):
+        return Plugin.objects.filter(state='approved')
 
     def create(self, request):
         github_url = request.data.get('github_url')

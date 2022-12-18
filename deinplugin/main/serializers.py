@@ -68,6 +68,7 @@ class PluginSerializer(serializers.ModelSerializer):
             'names',
             'descriptions',
             'specVersion',
+            'state',
             'introductions',
             'type',
             'supportedPlatforms',
