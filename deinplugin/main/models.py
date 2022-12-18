@@ -38,7 +38,12 @@ class Plugin(models.Model):
     icon = models.CharField(max_length=100, null=True, blank=True)
     videoSources = ArrayField(models.CharField(max_length=100), null=True, blank=True)
 
-    github_url = models.CharField(max_length=100)
+    github_url = models.CharField(max_length=100, unique=True)
+    class states(models.TextChoices):
+        pending = 'pending', 'Pending'
+        approved = 'approved', 'Approved'
+        rejected = 'rejected', 'Rejected'
+    state = models.CharField(choices=states.choices, default=states.pending, max_length=100)
 
 class PluginName(models.Model):
     plugin = models.ForeignKey(Plugin, on_delete=models.CASCADE, related_name='names')
@@ -65,3 +70,8 @@ class Installation(models.Model):
     plugin = models.ForeignKey(Plugin, on_delete=models.CASCADE, related_name='installations')
     key = models.CharField(max_length=5, null=True, blank=True)
     value = models.TextField()
+
+class Download(models.Model):
+    plugin = models.ForeignKey(Plugin, on_delete=models.CASCADE, related_name='download')
+    name = models.CharField(max_length=30, null=True, blank=True)
+    download_url = models.CharField(max_length=100)

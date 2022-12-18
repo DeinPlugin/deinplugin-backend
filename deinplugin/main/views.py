@@ -4,9 +4,10 @@ from rest_framework import status, viewsets
 from django.contrib.auth.models import User
 # import action decorator from 
 from rest_framework.decorators import action
+from django.db import IntegrityError
 
 from .utils import get_plugin_info
-from .models import Plugin, Dependency, Introduction, Description, PluginName
+from .models import Plugin, Dependency, Introduction, Description, PluginName, Download
 from .serializers import PluginSerializer
 
 import yaml
@@ -51,6 +52,11 @@ class PluginViewSet(viewsets.ModelViewSet):
                 videoSources=deinplugin_yaml.get('videoSources'), 
                 github_url=github_url)
             plugin.save()
+        # Exception when unique constraint is violated
+        except IntegrityError as e: 
+            if 'unique constraint' in e.args:
+                return Response({'message': 'Plugin already exists', 'error' : str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message': 'Plugin could not be created', 'error' : str(e)}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({'message': 'deinplugin.yaml is not valid', 'error' : str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -84,6 +90,10 @@ class PluginViewSet(viewsets.ModelViewSet):
         else:
             desc = Description.objects.create(plugin=plugin, key=None, value=descriptions)
             desc.save()
+        download = deinplugin_yaml.get('download')
+        if download != None:
+            download = Download.objects.create(plugin=plugin, url=download['url'], name=download['fileName'])
+            download.save()
         return Response({'success': 'Plugin created'}, status=status.HTTP_201_CREATED)
 
     @action(detail=False, methods=['post'], url_path='wipe')

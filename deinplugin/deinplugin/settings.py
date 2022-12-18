@@ -16,8 +16,9 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-with open("config.json", 'r') as f:
-    credentials = json.load(f)
+credentials = {'client_id': 'placeholder', 'client_secret': 'placeholder'}
+# with open("config.json", 'r') as f:
+#     credentials = json.load(f)
 
 
 # Quick-start development settings - unsuitable for production
