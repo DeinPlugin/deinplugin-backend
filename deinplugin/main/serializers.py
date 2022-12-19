@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Plugin, PluginName, Dependency, Introduction, Description, Installation, Download
 
+
 class PluginNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = PluginName
@@ -20,6 +21,7 @@ class DependencySerializer(serializers.ModelSerializer):
             'required',
         )
 
+
 class IntroductionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Introduction
@@ -27,6 +29,7 @@ class IntroductionSerializer(serializers.ModelSerializer):
             'key',
             'value',
         )
+
 
 class DescriptionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,6 +39,7 @@ class DescriptionSerializer(serializers.ModelSerializer):
             'value',
         )
 
+
 class InstallationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Installation
@@ -43,6 +47,7 @@ class InstallationSerializer(serializers.ModelSerializer):
             'key',
             'value',
         )
+
 
 class DownloadSerializer(serializers.ModelSerializer):
     class Meta:
@@ -60,9 +65,10 @@ class PluginSerializer(serializers.ModelSerializer):
     descriptions = DescriptionSerializer(many=True)
     installations = InstallationSerializer(many=True)
     download = DownloadSerializer(many=True)
+
     class Meta:
         model = Plugin
-       
+
         fields = (
             'uuid',
             'names',

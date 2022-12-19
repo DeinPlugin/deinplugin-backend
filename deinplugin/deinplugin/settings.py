@@ -153,14 +153,3 @@ LOGOUT_REDIRECT_URL = 'login'
 SOCIAL_AUTH_GITHUB_KEY = credentials['client_id']
 SOCIAL_AUTH_GITHUB_SECRET = credentials['client_secret']
 SOCIAL_AUTH_GITHUB_SCOPE = ['user:email', 'user:follow']
-
-# ### Template for prodsettings.py ###
-#
-# from deinplugin.settings import *
-#
-# SECRET_KEY = 'placeholder'
-#
-# ALLOWED_HOSTS = ['placeholder.com']
-#
-# DEBUG = False
-#

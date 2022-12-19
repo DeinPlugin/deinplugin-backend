@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  webserver:
+    environment:
+      DJANGO_SETTINGS_MODULE: "deinplugin.settings"
+    volumes:
+      - ./deinplugin:/var/www/deinplugin
+
+  django-db:
+    ports:
+      - "5091:5091"

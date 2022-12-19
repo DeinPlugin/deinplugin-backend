@@ -144,3 +144,8 @@ collected-static/
 # Certificates and keys
 *.pem
 *.crt
+
+# Settings overrides
+prodsettings.py
+docker-compose.override.yml
+!localdev/*
