@@ -32,7 +32,7 @@ class PluginViewSet(viewsets.ModelViewSet):
     def create(self, request, **kwargs):
         github_url = request.data.get('github_url')
         content = get_plugin_info(github_url)
-
+        
         if content is None:
             return Response({'error': 'Could not find deinplugin.yaml'}, status=status.HTTP_400_BAD_REQUEST)
 
