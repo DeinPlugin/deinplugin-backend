@@ -9,7 +9,7 @@ RUN pip install mod_wsgi
 RUN mod_wsgi-express install-module > /etc/apache2/mods-available/wsgi.load
 
 RUN a2enmod wsgi
-# RUN a2enmod ssl
+RUN a2enmod ssl
 
 COPY ./requirements.txt ./requirements.txt
 
