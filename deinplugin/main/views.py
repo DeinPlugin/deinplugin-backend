@@ -42,6 +42,7 @@ class PluginViewSet(viewsets.ModelViewSet):
             plugin = Plugin.objects.create(
                 specVersion=deinplugin_yaml.get('specVersion'),
                 type=deinplugin_yaml.get('type'),
+                mail=deinplugin_yaml.get('mail'),
                 supportedPlatforms=deinplugin_yaml.get('supportedPlatforms'),
                 supportedGameVersions=deinplugin_yaml.get('supportedGameVersions'),
                 category=deinplugin_yaml.get('category'),
@@ -54,9 +55,7 @@ class PluginViewSet(viewsets.ModelViewSet):
             plugin.save()
         # Exception when unique constraint is violated
         except IntegrityError as e:
-            if 'unique constraint' in e.args:
-                return Response({'message': 'Plugin already exists', 'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-            return Response({'message': 'Plugin could not be created', 'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message': 'Plugin could not be created, probably already exists', 'error': str(e)}, status=status.HTTP_409_CONFLICT)
         except Exception as e:
             return Response({'message': 'deinplugin.yaml is not valid', 'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
