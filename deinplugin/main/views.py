@@ -42,7 +42,7 @@ class PluginViewSet(viewsets.ModelViewSet):
             plugin = Plugin.objects.create(
                 specVersion=deinplugin_yaml.get('specVersion'),
                 type=deinplugin_yaml.get('type'),
-                mail=deinplugin_yaml.get('mail'),
+                mail= request.data.get('mail', None),
                 supportedPlatforms=deinplugin_yaml.get('supportedPlatforms'),
                 supportedGameVersions=deinplugin_yaml.get('supportedGameVersions'),
                 category=deinplugin_yaml.get('category'),
