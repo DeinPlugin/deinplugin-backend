@@ -6,7 +6,7 @@ import uuid
 class Plugin(models.Model):
     uuid = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     
-    mail = models.EmailField(max_length=254, unique=True, null=True, blank=True)
+    mail = models.EmailField(max_length=254, null=True, blank=True)
     specVersion = models.IntegerField(default=1)
 
     class PluginType(models.TextChoices):
