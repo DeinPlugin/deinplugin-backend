@@ -20,7 +20,7 @@ services:
     depends_on:
       - django-db
     ports:
-      - "5097:80"
+      - "5097:443"
 
   django-db:
     image: postgres:latest
