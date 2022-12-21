@@ -1,4 +1,5 @@
 import requests
+import hashlib
 
 
 def get_plugin_info(github_url):
@@ -19,3 +20,7 @@ def get_plugin_info(github_url):
     else:
         content = None
     return content
+
+
+def stable_string_hash(string: str):
+    return hashlib.md5(string.encode('utf-8')).hexdigest()

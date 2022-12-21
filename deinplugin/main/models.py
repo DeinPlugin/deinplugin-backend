@@ -5,7 +5,10 @@ import uuid
 
 class Plugin(models.Model):
     uuid = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    last_yaml_hash = models.CharField(max_length=100, null=True, blank=True)
+
     mail = models.EmailField(max_length=254, null=True, blank=True)
     specVersion = models.IntegerField(default=1)
 

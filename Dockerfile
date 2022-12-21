@@ -3,7 +3,7 @@ FROM python:3.11.0-slim-bullseye
 ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update
-RUN apt-get install -y apache2 apache2-dev apache2-utils python3-dev libpq-dev build-essential
+RUN apt-get install -y apache2 apache2-dev apache2-utils python3-dev libpq-dev build-essential cron
 
 RUN pip install mod_wsgi
 RUN mod_wsgi-express install-module > /etc/apache2/mods-available/wsgi.load
