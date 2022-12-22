@@ -28,6 +28,9 @@ class PluginViewSet(viewsets.ModelViewSet):
     serializer_class = PluginSerializer
 
     def get_queryset(self):
+        state = self.request.query_params.get('state', None)
+        if state is not None:
+            return Plugin.objects.filter(state=state)
         return Plugin.objects.filter(state='approved')
 
     def create(self, request, **kwargs):
