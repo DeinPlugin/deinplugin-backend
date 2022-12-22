@@ -38,6 +38,18 @@ class PluginViewSet(viewsets.ModelViewSet):
             else:
                 return Plugin.objects.none()
         return Plugin.objects.filter(state='approved')
+    
+    @action(detail=False, methods=['post'], url_path='accept')
+    def accept(self, request, pk=None):
+        secret = request.data.get('secret', None)
+        if secret == settings.REQUEST_SECRET:
+            plugin_uuid = request.data.get('plugin', None)
+            plugin = Plugin.objects.get(uuid=plugin_uuid)
+            plugin.state = 'approved'
+            plugin.save()
+            return Response({'success': 'Plugin accepted'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Invalid secret'}, status=status.HTTP_401_UNAUTHORIZED)
 
     def create(self, request, **kwargs):
         github_url = request.data.get('github_url')
