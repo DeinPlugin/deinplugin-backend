@@ -98,8 +98,3 @@ class PluginViewSet(viewsets.ModelViewSet):
             download.save()
         return Response({'success': 'Plugin created'}, status=status.HTTP_201_CREATED)
 
-    @action(detail=False, methods=['post'], url_path='wipe')
-    def wipe(self, request, pk=None):
-        Plugin.objects.all().delete()
-        return Response({'success': 'Plugins wiped'}, status=status.HTTP_200_OK)
-
