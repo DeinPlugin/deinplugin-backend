@@ -7,6 +7,7 @@ from .models import Plugin
 from .pluginmeta import fill_plugin_meta_from_yaml
 from .serializers import PluginSerializer
 from .utils import get_plugin_info
+from django.conf import settings
 
 
 # # Create your views here.
@@ -28,9 +29,14 @@ class PluginViewSet(viewsets.ModelViewSet):
     serializer_class = PluginSerializer
 
     def get_queryset(self):
-        state = self.request.query_params.get('state', None)
+        state = self.request.query_params.get('show', None)
         if state is not None:
-            return Plugin.objects.filter(state=state)
+            secret = self.request.query_params.get('secret', None)
+            # get REQUEST_SECRET from settings.py
+            if secret == settings.REQUEST_SECRET:
+                return Plugin.objects.filter(state=state)
+            else:
+                return Plugin.objects.none()
         return Plugin.objects.filter(state='approved')
 
     def create(self, request, **kwargs):

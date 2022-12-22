@@ -1,3 +1,6 @@
+# Other excluded files
+*.env
+
 # Django #
 *.log
 *.pot
