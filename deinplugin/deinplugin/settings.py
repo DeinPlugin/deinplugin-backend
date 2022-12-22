@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-import json
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -43,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_crontab',
     'main',
     'social_django',
     'rest_framework',
@@ -154,13 +154,8 @@ SOCIAL_AUTH_GITHUB_KEY = credentials['client_id']
 SOCIAL_AUTH_GITHUB_SECRET = credentials['client_secret']
 SOCIAL_AUTH_GITHUB_SCOPE = ['user:email', 'user:follow']
 
-# ### Template for prodsettings.py ###
-#
-# from deinplugin.settings import *
-#
-# SECRET_KEY = 'placeholder'
-#
-# ALLOWED_HOSTS = ['placeholder.com']
-#
-# DEBUG = False
-#
+CRONTAB_LOCK_JOBS = True
+
+CRONJOBS = [
+    ('0 12 * * *', 'main.pluginmeta.do_plugin_update_cycle')
+]
