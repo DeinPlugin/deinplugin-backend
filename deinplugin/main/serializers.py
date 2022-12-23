@@ -59,7 +59,7 @@ class DownloadSerializer(serializers.ModelSerializer):
 
 
 class PluginSerializer(serializers.ModelSerializer):
-    names = PluginNameSerializer(many=True)
+    names = PluginNameSerializer(many=True, read_only=True)
     dependencies = DependencySerializer(many=True)
     introductions = IntroductionSerializer(many=True)
     descriptions = DescriptionSerializer(many=True)
@@ -83,6 +83,7 @@ class PluginSerializer(serializers.ModelSerializer):
             'installations',
             'category',
             'authors',
+            'mail',
             'tags',
             'images',
             'icon',

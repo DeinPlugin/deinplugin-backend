@@ -28,19 +28,22 @@ class PluginViewSet(viewsets.ModelViewSet):
     queryset = Plugin.objects.all()
     serializer_class = PluginSerializer
 
-    def get_queryset(self):
-        state = self.request.query_params.get('state', None)
-        if state is not None:
-            secret = self.request.query_params.get('secret', None)
-            # get REQUEST_SECRET from settings.py
-            if secret == settings.REQUEST_SECRET:
-                return Plugin.objects.filter(state=state)
-            else:
-                return Plugin.objects.none()
-        return Plugin.objects.filter(state='approved')
-    
-    @action(detail=False, methods=['post'], url_path='accept')
-    def accept(self, request, pk=None):
+    # override get method
+    def list(self, request, **kwargs):
+        secret = request.query_params.get('secret', None)
+        if secret is None:
+            serializer = PluginSerializer(Plugin.objects.filter(state='approved'), many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        # get REQUEST_SECRET from settings.py
+        if secret == settings.REQUEST_SECRET:
+            serializer = PluginSerializer(Plugin.objects.all(), many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            # return unauthorized if secret is invalid
+            return Response({'error': 'Invalid secret'}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+    def patch(self, request, **kwargs):
         secret = request.data.get('secret', None)
         if secret == settings.REQUEST_SECRET:
             plugin_uuid = request.data.get('plugin', None)
