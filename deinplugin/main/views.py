@@ -46,11 +46,7 @@ class PluginViewSet(viewsets.ModelViewSet):
     def update(self, request, **kwargs):
         secret = request.data.get('secret', None)
         if secret == settings.REQUEST_SECRET:
-            plugin_uuid = request.data.get('plugin', None)
-            plugin = Plugin.objects.get(uuid=plugin_uuid)
-            plugin.state = 'approved'
-            plugin.save()
-            return Response({'success': 'Plugin accepted'}, status=status.HTTP_200_OK)
+            return super().update(request, **kwargs)
         else:
             return Response({'error': 'Invalid secret'}, status=status.HTTP_401_UNAUTHORIZED)
 
