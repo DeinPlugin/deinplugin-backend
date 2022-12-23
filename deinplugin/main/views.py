@@ -43,7 +43,7 @@ class PluginViewSet(viewsets.ModelViewSet):
             return Response({'error': 'Invalid secret'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
-    def patch(self, request, **kwargs):
+    def update(self, request, **kwargs):
         secret = request.data.get('secret', None)
         if secret == settings.REQUEST_SECRET:
             plugin_uuid = request.data.get('plugin', None)
