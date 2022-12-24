@@ -22,6 +22,7 @@ class Plugin(models.Model):
         spigot = 'spigot', 'Spigot'
         paper = 'paper', 'Paper'
         sponge = 'sponge', 'Sponge'
+        minestom = 'minestom', 'Minestom'
 
     supportedPlatforms = ArrayField(models.CharField(choices=Platforms.choices, max_length=100), null=True, blank=True)
 
