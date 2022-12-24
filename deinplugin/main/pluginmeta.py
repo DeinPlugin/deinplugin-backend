@@ -4,7 +4,7 @@ import time
 from random import uniform
 from django.db import transaction
 
-from .models import Plugin, Dependency, Introduction, Description, PluginName, Download
+from .models import Plugin, Dependency, Introduction, Description, PluginName, Download, Installation
 from .utils import get_plugin_info, stable_string_hash
 
 logger = logging.getLogger('pluginmeta')
@@ -98,7 +98,16 @@ def fill_plugin_meta_from_yaml(plugin: Plugin, yaml_str: str):
     else:
         intro = Introduction.objects.create(plugin=plugin, key=None, value=introductions)
         intro.save()
-
+    
+    installations = deinplugin_yaml['installation']
+    if isinstance(installations, dict):
+        for key, value in installations.items():
+            install = Installation.objects.create(plugin=plugin, key=key, value=value)
+            install.save()
+    else:
+        install = Installation.objects.create(plugin=plugin, key=None, value=installations)
+        install.save()
+        
     descriptions = deinplugin_yaml['description']
     if isinstance(descriptions, dict):
         for key, value in descriptions.items():
