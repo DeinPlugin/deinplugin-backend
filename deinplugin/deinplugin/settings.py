@@ -12,12 +12,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
-import environ
-
-env = environ.Env()
-environ.Env.read_env()
-
-REQUEST_SECRET = env('REQUEST_SECRET')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,6 +25,8 @@ credentials = {'client_id': 'placeholder', 'client_secret': 'placeholder'}
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-zfg7n27&5ok#o_41ghjd5*a+crfqf(s3i#l-xfrhinysz3*5yu'
+
+REQUEST_SECRET = os.environ.get('REQUEST_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

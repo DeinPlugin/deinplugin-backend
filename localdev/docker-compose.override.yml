@@ -3,6 +3,7 @@ services:
   webserver:
     environment:
       DJANGO_SETTINGS_MODULE: "deinplugin.settings"
+      REQUEST_SECRET: "localsecret"
     volumes:
       - ./deinplugin:/var/www/deinplugin
 
