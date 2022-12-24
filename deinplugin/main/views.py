@@ -4,7 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from .models import Plugin
-from .pluginmeta import fill_plugin_meta_from_yaml
+from .pluginmeta import fill_plugin_meta_from_yaml, clear_plugin_meta
 from .serializers import PluginSerializer
 from .utils import get_plugin_info
 from django.conf import settings
@@ -65,6 +65,7 @@ class PluginViewSet(viewsets.ModelViewSet):
                 try:
                     with transaction.atomic():
                         plugin = existing_plugins.first()
+                        clear_plugin_meta(plugin)
                         fill_plugin_meta_from_yaml(plugin, content)
                         plugin.state = 'pending'
                         plugin.save()
