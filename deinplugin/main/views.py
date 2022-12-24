@@ -57,8 +57,21 @@ class PluginViewSet(viewsets.ModelViewSet):
         
         if content is None:
             return Response({'error': 'Could not find deinplugin.yaml'}, status=status.HTTP_400_BAD_REQUEST)
-
-        if Plugin.objects.filter(github_url=github_url).exists():
+        
+        existing_plugins = Plugin.objects.filter(github_url=github_url)
+        if existing_plugins.exists():
+            if existing_plugins.first().state == 'rejected':
+                # resubmission of a rejected plugin
+                try:
+                    with transaction.atomic():
+                        plugin = existing_plugins.first()
+                        fill_plugin_meta_from_yaml(plugin, content)
+                        plugin.state = 'pending'
+                        plugin.save()
+                except Exception as e:
+                    return Response({'message': 'Failed to create plugin, probably because deinplugin.yaml is not valid', 'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)    
+                # plugin successfully submitted again
+                return Response({'success': 'Plugin submitted'}, status=status.HTTP_201_CREATED)
             return Response({'message': 'Plugin already submitted'}, status=status.HTTP_409_CONFLICT)
 
         try:
