@@ -87,6 +87,7 @@ def fill_plugin_meta_from_yaml(plugin: Plugin, yaml_str: str):
         for dependency in dependencies:
             depend = Dependency.objects.create(
                 plugin=plugin, url=dependency['url'],
+                name=dependency['name'],
                 versionRange=dependency['versionRange'],
                 required=dependency['required'])
             depend.save()
