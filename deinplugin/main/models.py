@@ -64,6 +64,7 @@ class PluginName(models.Model):
 class Dependency(models.Model):
     plugin = models.ForeignKey(Plugin, on_delete=models.CASCADE, related_name='dependencies')
     url = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
     versionRange = models.CharField(max_length=100)
     required = models.BooleanField(default=True)
 
