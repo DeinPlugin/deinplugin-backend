@@ -53,6 +53,7 @@ def clear_plugin_meta(plugin: Plugin):
     PluginName.objects.filter(plugin=plugin).delete()
     Dependency.objects.filter(plugin=plugin).delete()
     Introduction.objects.filter(plugin=plugin).delete()
+    Installation.objects.filter(plugin=plugin).delete()
     Description.objects.filter(plugin=plugin).delete()
     Download.objects.filter(plugin=plugin).delete()
 
