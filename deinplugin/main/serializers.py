@@ -15,8 +15,8 @@ class DependencySerializer(serializers.ModelSerializer):
     class Meta:
         model = Dependency
         fields = (
-            'plugin',
             'url',
+            'name',
             'versionRange',
             'required',
         )
